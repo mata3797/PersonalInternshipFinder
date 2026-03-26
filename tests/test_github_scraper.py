@@ -82,6 +82,7 @@ class TestHTMLTableParser:
         assert job.company == "CrowdStrike"
         assert "Security" in job.title
         assert job.location == "Austin, TX"
+        assert job.published_date == "1d"
         assert "crowdstrike" in job.url.lower()
 
     def test_sub_entry_inherits_company_name(self):

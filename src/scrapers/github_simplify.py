@@ -128,6 +128,7 @@ def _parse_html_tables(html: str) -> List[Job]:
         role_idx = col.get("role", 1)
         location_idx = col.get("location", 2)
         application_idx = col.get("application", 3)
+        age_idx = col.get("age")
 
         for tr in table.find_all("tr"):
             tds = tr.find_all("td")
@@ -151,6 +152,7 @@ def _parse_html_tables(html: str) -> List[Job]:
 
             title = tds[role_idx].get_text(strip=True) if role_idx < len(tds) else ""
             location = _parse_location(tds[location_idx]) if location_idx < len(tds) else ""
+            published_date = _clean(tds[age_idx].get_text()) if age_idx is not None and age_idx < len(tds) else ""
 
             url = None
             if application_idx < len(tds):
@@ -164,6 +166,7 @@ def _parse_html_tables(html: str) -> List[Job]:
                     title=title,
                     company=company,
                     location=location,
+                    published_date=published_date,
                     url=url,
                     source="SimplifyJobs GitHub",
                 )

@@ -95,6 +95,13 @@ _CYBER_TITLE_PATTERNS = [re.compile(r"\b" + re.escape(kw), re.IGNORECASE) for kw
 _CYBER_COMPANY_PATTERNS = [re.compile(r"\b" + re.escape(kw), re.IGNORECASE) for kw in _CYBER_COMPANIES]
 _INTERN_PATTERNS = [re.compile(r"\b" + re.escape(t) + r"\b", re.IGNORECASE) for t in _SUMMER_TERMS]
 
+_ALLOWED_LOCATION_PATTERNS = [
+    re.compile(r"\bremote\b", re.IGNORECASE),
+    re.compile(r"\bhawaii\b|\bhi\b", re.IGNORECASE),
+    re.compile(r"\bwashington\b|\bwa\b", re.IGNORECASE),
+    re.compile(r"\boregon\b|\bor\b", re.IGNORECASE),
+]
+
 
 def _matches_any(text: str, patterns: list) -> bool:
     return any(p.search(text) for p in patterns)
@@ -120,6 +127,13 @@ def _is_relevant(job: Job) -> bool:
     is_cyber_company = _matches_any(company_lower, _CYBER_COMPANY_PATTERNS)
 
     return has_intern_term and (has_cyber_title or is_cyber_company)
+
+
+def _is_allowed_location(location: str) -> bool:
+    """Return True for Remote/HI/WA/OR listings."""
+    if not location:
+        return False
+    return any(p.search(location) for p in _ALLOWED_LOCATION_PATTERNS)
 
 
 def _deduplicate(jobs: List[Job]) -> List[Job]:
@@ -161,7 +175,7 @@ class CybersecurityInternshipAgent:
         all_jobs.extend(company_jobs)
 
         # Filter & deduplicate
-        relevant = [j for j in all_jobs if _is_relevant(j)]
+        relevant = [j for j in all_jobs if _is_relevant(j) and _is_allowed_location(j.location)]
         unique = _deduplicate(relevant)
 
         logger.info(

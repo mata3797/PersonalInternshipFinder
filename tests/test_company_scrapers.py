@@ -25,6 +25,7 @@ def _make_greenhouse_job(title, location="Remote", url="https://boards.greenhous
         "title": title,
         "location": {"name": location},
         "absolute_url": url,
+        "updated_at": "2026-03-24T00:00:00Z",
     }
 
 
@@ -33,6 +34,7 @@ def _make_lever_job(title, location="Remote", url="https://jobs.lever.co/company
         "text": title,
         "categories": {"location": location},
         "hostedUrl": url,
+        "createdAt": "2026-03-23T00:00:00Z",
     }
 
 
@@ -52,6 +54,7 @@ class TestRapid7Scraper:
         assert len(jobs) == 1
         assert jobs[0].title == "Security Intern"
         assert jobs[0].company == "Rapid7"
+        assert jobs[0].published_date == "2026-03-24T00:00:00Z"
         assert "rapid7" in jobs[0].url
 
     @responses_lib.activate
@@ -79,6 +82,7 @@ class TestTenableScraper:
         jobs = scrape_tenable()
         assert len(jobs) == 1
         assert jobs[0].company == "Tenable"
+        assert jobs[0].published_date == "2026-03-24T00:00:00Z"
 
     @responses_lib.activate
     def test_filters_non_matching_jobs(self):
@@ -108,6 +112,7 @@ class TestSentinelOneScraper:
         jobs = scrape_sentinelone()
         assert len(jobs) == 1
         assert jobs[0].company == "SentinelOne"
+        assert jobs[0].published_date == "2026-03-24T00:00:00Z"
 
 
 class TestQualysScraper:
@@ -125,4 +130,5 @@ class TestQualysScraper:
         jobs = scrape_qualys()
         assert len(jobs) == 1
         assert jobs[0].company == "Qualys"
+        assert jobs[0].published_date == "2026-03-23T00:00:00Z"
         assert jobs[0].url == "https://jobs.lever.co/qualys/abc"

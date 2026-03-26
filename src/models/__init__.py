@@ -42,6 +42,7 @@ class Job:
     location: str
     url: str
     pay: Optional[str] = None
+    published_date: Optional[str] = None
     source: str = ""
 
     def is_cybersecurity_related(self) -> bool:
@@ -59,6 +60,7 @@ class Job:
             "company": self.company,
             "location": self.location,
             "pay": self.pay or "Not listed",
+            "published_date": self.published_date or "Not listed",
             "url": self.url,
             "source": self.source,
         }

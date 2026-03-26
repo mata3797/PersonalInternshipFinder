@@ -112,6 +112,7 @@ def scrape_crowdstrike(session: Optional[requests.Session] = None) -> List[Job]:
                     title=title,
                     company="CrowdStrike",
                     location=location,
+                    published_date=_clean(item.get("postedOn", "") or item.get("bulletFields", [""])[0] if item.get("bulletFields") else ""),
                     url=url,
                     source="CrowdStrike Careers",
                 )
@@ -161,6 +162,7 @@ def scrape_palo_alto(session: Optional[requests.Session] = None) -> List[Job]:
                     title=title,
                     company="Palo Alto Networks",
                     location=location,
+                    published_date=_clean(item.get("postedOn", "") or item.get("bulletFields", [""])[0] if item.get("bulletFields") else ""),
                     url=url,
                     source="Palo Alto Networks Careers",
                 )
@@ -202,6 +204,7 @@ def scrape_rapid7(session: Optional[requests.Session] = None) -> List[Job]:
                     title=title,
                     company="Rapid7",
                     location=location,
+                    published_date=_clean(item.get("updated_at", "") or item.get("created_at", "")),
                     url=url,
                     source="Rapid7 Careers",
                 )
@@ -242,6 +245,7 @@ def scrape_tenable(session: Optional[requests.Session] = None) -> List[Job]:
                     title=title,
                     company="Tenable",
                     location=location,
+                    published_date=_clean(item.get("updated_at", "") or item.get("created_at", "")),
                     url=url,
                     source="Tenable Careers",
                 )
@@ -282,6 +286,7 @@ def scrape_sentinelone(session: Optional[requests.Session] = None) -> List[Job]:
                     title=title,
                     company="SentinelOne",
                     location=location,
+                    published_date=_clean(item.get("updated_at", "") or item.get("created_at", "")),
                     url=url,
                     source="SentinelOne Careers",
                 )
@@ -323,6 +328,7 @@ def scrape_qualys(session: Optional[requests.Session] = None) -> List[Job]:
                     title=title,
                     company="Qualys",
                     location=location,
+                    published_date=_clean(item.get("createdAt", "") or item.get("updatedAt", "")),
                     url=url,
                     source="Qualys Careers",
                 )

@@ -34,6 +34,7 @@ def _build_table(jobs) -> Table:
     table.add_column("Company", style="bold green", min_width=18)
     table.add_column("Title", style="white", min_width=28)
     table.add_column("Location", style="yellow", min_width=18)
+    table.add_column("Published", style="cyan", min_width=12)
     table.add_column("Pay", style="magenta", min_width=12)
     table.add_column("Link", style="blue", min_width=35)
 
@@ -43,6 +44,7 @@ def _build_table(jobs) -> Table:
             job.company,
             job.title,
             job.location or "—",
+            job.published_date or "Not listed",
             job.pay or "Not listed",
             job.url,
         )
